@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {PageHeader} from "antd";
+import {Profile} from "./shared/ProfileCard";
+import {GitHubSearch} from "./shared/GitHubSearch";
+import {CardList} from './shared/ProfileList';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [profiles, setProfiles] = useState([] as Profile[]);
+    const addNewProfile = (profile: Profile) => {
+        const newState = [...profiles, profile];
+        setProfiles(newState);
+    };
+
+    return (
+        <div className="App">
+            <PageHeader
+                className="site-page-header"
+                title="GitHub App"
+                subTitle="made with React"
+            />
+
+            <GitHubSearch onSubmit={addNewProfile}/>
+
+            <CardList items={profiles}/>
+        </div>
+    );
 }
 
 export default App;
